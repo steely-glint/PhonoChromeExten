@@ -25,11 +25,9 @@ var phonoUsers = {
       a.onclick = function(){
         addr = this.href;
         console.log("asking Phono to dial"+addr);
-        chrome.runtime.getBackgroundPage(function(bg){
-          bg.dialPhono(addr);
-        });
-        
-//	window.open("http://s.phono.com/releases/1.1/samples/kitchen-sink/www/index.html?dial="+this.href);
+        chrome.tabs.executeScript(null,
+        {code:"phono.phone.dial('" + addr + "')"});
+        //window.close();
       };
       var bits = users[i].address.split("@");
       var ad = bits[0].replace("\\40","@");
