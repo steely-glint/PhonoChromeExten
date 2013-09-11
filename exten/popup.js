@@ -23,7 +23,13 @@ var phonoUsers = {
       var a = document.createElement('a');
       var b = document.createElement('br');
       a.onclick = function(){
-	window.open("http://s.phono.com/releases/1.1/samples/kitchen-sink/www/index.html?dial="+this.href);
+        addr = this.href;
+        console.log("asking Phono to dial"+addr);
+        chrome.runtime.getBackgroundPage(function(bg){
+          bg.dialPhono(addr);
+        });
+        
+//	window.open("http://s.phono.com/releases/1.1/samples/kitchen-sink/www/index.html?dial="+this.href);
       };
       var bits = users[i].address.split("@");
       var ad = bits[0].replace("\\40","@");
@@ -37,5 +43,7 @@ var phonoUsers = {
 };
 
 document.addEventListener('DOMContentLoaded', function () {
+  var constraints = {audio: true, video: false};
+  navigator.webkitGetUserMedia(constraints,function(){console.log("gum happy")},function(){console.log("gum sad")});
   phonoUsers.requestList();
 });

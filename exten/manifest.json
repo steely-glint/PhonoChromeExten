@@ -4,17 +4,16 @@
   "name": "Phono for Troponauts",
   "description": "This extension lets you call other phono users.",
   "version": "1.0",
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
 
   "permissions": [
     "https://*.phono.com/", "http://*.phono.com/", "http://*.westhawk.co.uk/"
   ],
+  "background": {
+    "page": "background.html"
+  },
   "sandbox": {
-    "pages": [
-      "phono.html"
-    ],
-    // content_security_policy is optional.
-    "content_security_policy":
-        "sandbox allow-scripts; script-src https://s.phono.com"
+     "pages": ["phono.html"]
   },
   "browser_action": {
     "default_icon": "phono-slide-icon.png",
