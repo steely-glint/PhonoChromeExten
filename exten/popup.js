@@ -6,14 +6,6 @@ var phonoUsers = {
     req.send(null);
   },
 
-  /**
-   * Handle the 'onload' event of our kitten XHR request, generated in
-   * 'requestKittens', by generating 'img' elements, and stuffing them into
-   * the document for display.
-   *
-   * @param {ProgressEvent} e The XHR ProgressEvent.
-   * @private
-   */
   showUsers_: function (e) {
     var resp = e.target.responseText;
     var users = JSON.parse(resp);
@@ -27,21 +19,16 @@ var phonoUsers = {
         console.log("asking Phono to dial"+addr);
         chrome.tabs.executeScript(null,
         {code:"phono.phone.dial('" + addr + "')"});
-        //window.close();
+        window.close();
       };
-      var bits = users[i].address.split("@");
-      var ad = bits[0].replace("\\40","@");
-      a.href=bits[1]+":"+ad;
+      a.href=users[i].address;
       a.innerHTML = users[i].user;
       document.body.appendChild(a);
       document.body.appendChild(b);
     }
   }
-
 };
 
 document.addEventListener('DOMContentLoaded', function () {
-  var constraints = {audio: true, video: false};
-  navigator.webkitGetUserMedia(constraints,function(){console.log("gum happy")},function(){console.log("gum sad")});
   phonoUsers.requestList();
 });
